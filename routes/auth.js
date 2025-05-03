@@ -29,6 +29,10 @@ router.post('/signup', async (req, res) => {
         // Save user
         await user.save();
 
+        // Send welcome email
+        const { sendWelcomeEmail } = require('../utils/emailService');
+        await sendWelcomeEmail(email, username);
+
         // Create token
         const token = jwt.sign(
             { userId: user._id },
